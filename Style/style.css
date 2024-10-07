@@ -35,6 +35,18 @@ header {
     color: #66b2ff; /* Azul más vivo */
 }
 
+/* Título centrado */
+.title {
+    flex: 1;
+    text-align: center;
+}
+
+.title h1 {
+    font-size: 24px;
+    font-weight: normal;
+    color: #cce7ff; /* Azul claro */
+}
+
 /* Estilos del botón de perfil */
 .profile-dropdown {
     position: relative;

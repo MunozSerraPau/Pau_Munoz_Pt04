@@ -7,10 +7,15 @@
     <title>Practica 4</title>
 </head>
 <body>
-<header>
+    <header>
         <!-- Enlace a la izquierda para "Home" -->
         <div class="home">
             <a href="#">Home</a>
+        </div>
+
+        <!-- Título centrado -->
+        <div class="title">
+            <h1>Inici d'usuaris i registre de sessions</h1>
         </div>
 
         <!-- Perfil desplegable a la derecha -->
