@@ -1,6 +1,6 @@
 # Inici-usuaris-i-registre-de-sessions
 
-### Objectiu
+## Objectiu
 
 - En obrir el web sortiran tots els articles de forma pública sense excepció i sense opció d’inserir, editar o eliminar articles.
 - A la mateixa pàgina principal trobarem una opció per a logar-se o enregistrar-se.

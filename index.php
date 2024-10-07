@@ -7,7 +7,7 @@
     <title>Practica 4</title>
 </head>
 <body>
-    <header>
+<header>
         <!-- Enlace a la izquierda para "Home" -->
         <div class="home">
             <a href="#">Home</a>
@@ -15,7 +15,10 @@
 
         <!-- Perfil desplegable a la derecha -->
         <div class="profile-dropdown">
-            <button class="profile-btn">Perfil</button>
+            <button class="profile-btn">
+                <img src="https://via.placeholder.com/40" alt="Icono Perfil" class="profile-icon">
+                Perfil
+            </button>
             <div class="dropdown-content">
                 <a href="#">Iniciar sesión</a>
                 <a href="#">Crear usuario</a>
