@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./Style/style.css">
+    <link rel="stylesheet" href="./Style/index.css">
     <title>Practica 4</title>
 </head>
 <body>
     <header>
         <!-- Enlace a la izquierda para "Home" -->
         <div class="home">
-            <a href="#">Home</a>
+            <a href="./index.php">Home</a>
         </div>
 
         <!-- Título centrado -->
@@ -25,8 +25,8 @@
                 Perfil
             </button>
             <div class="dropdown-content">
-                <a href="#">Iniciar sesión</a>
-                <a href="#">Crear usuario</a>
+                <a href="./Vista/login.php">Login</a>
+                <a href="./Vista/signUp.php">Sign Up</a>
             </div>
         </div>
     </header>
