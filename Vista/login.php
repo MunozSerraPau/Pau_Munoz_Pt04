@@ -42,7 +42,7 @@
             </div>
             <p class="form-footer">Has oblidat la contrasenya? <a href="#">Recuperar</a></p> <br>
             <div class="form-group">
-                <button type="submit" class="btn-submit">Iniciar sesión</button>
+                <button type="submit" class="btn-submit" name="login">Iniciar sesión</button>
             </div>
             <p class="form-footer">No tens un compte? <a href="./signUp.php">Regístrate</a></p>
         </form>
