@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../Style/login.css">
 </head>
 <body>
-
+    <?php include "../Controlador/controladorUsuaris.php" ?>
     <header>
         <!-- Enlace a la izquierda para "Home" -->
         <div class="home">
@@ -30,7 +30,7 @@
 
     <!-- Formulario de inicio de sesión -->
     <div class="login-form-container">
-        <form action="login.php" method="POST" class="login-form">
+        <form <?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>, method="POST" class="login-form">
             <h2>Iniciar sesión</h2>
             <div class="form-group">
                 <label for="username">Usuario</label>

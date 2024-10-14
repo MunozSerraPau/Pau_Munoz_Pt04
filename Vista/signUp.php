@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="../Style/signUp.css">
 </head>
 <body>
+    <?php include '../Controlador/controladorUsuaris.php'; ?>
+
+
     <header>
         <!-- Enlace a la izquierda para "Home" -->
         <div class="home">
@@ -29,7 +32,7 @@
 
     <!-- Formulario de creación de cuenta -->
     <div class="signup-form-container">
-        <form action="signup.php" method="POST" class="signup-form">
+        <form <?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>, method="POST" class="signup-form">
             <h2>Crea un compte</h2>
             <div class="form-group">
                 <label for="firstname">Nom: </label>
@@ -59,8 +62,19 @@
                 <label for="confirm-password">Confirmar Contrasenya: </label>
                 <input type="password" id="confirm-password" name="confirm-password" required>
             </div>
+            
+            <?php if (isset($error)): // Comprova si la variable "error" existeix ?> 
+                <?php if (!empty($error) && $error != "Confirmat"): // Si hi ha un error que no sigui "Confirmat" entra ?>   
+                    <p><?php echo $error // Mostra l'error que hi ha ?></p>
+                <?php elseif ($error == "Confirmat"): // Si l'error és "Confirmat" ?>
+                    <p><?php echo '✅ Inserit correctament!'; // Missatge de inserir amb èxit ?></p>
+                <?php endif ?>                
+            <?php endif ?>
+
+            <br><br>
+
             <div class="form-group">
-                <button type="submit" class="btn-submit">CREAR COMPTE</button>
+                <button type="submit" class="btn-submit" name="singup">CREAR COMPTE</button>
             </div>
             <p class="form-footer">Tens un compte? <a href="./login.php">Inicia Sessió</a></p>
         </form>
