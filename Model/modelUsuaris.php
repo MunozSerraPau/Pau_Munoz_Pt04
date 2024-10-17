@@ -1,29 +1,80 @@
 <?php 
 // Pau Muñoz Serra
 
-function modelUsuariExisteix(PDO $connexio, string $username, string $password) {
+function modelNickNameExisteixLogin(PDO $connexio, string $username) {
     try {
-        $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $sql = "DELETE FROM articles WHERE nickname = :username";
+        echo "        KLK COMPROVANT NOM     ";
+        $sql = "SELECT contrasenya FROM usuaris WHERE nickname = :username";
         $statement = $connexio->prepare($sql);
         
         $statement->execute( 
             array(
-            ':username' => $username)
+            ':username' => $username
+            )
         );
         
-        if ($statement->rowCount() > 0) {
-            return "eliminat";
+        $resultat = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($resultat) {
+            return $resultat['contrasenya'];
         } else {
-            return "No s'ha ELIMINAR cap article";
+            return "NoHiHaUsuari";
         }
- 
+
     } catch (PDOException $e) {
         $error = "Falla a la connexio a la Base de Dades";
+        return $error;
     }
 }
 
+function modelContrasenyaIgualLogin(PDO $connexio, string $username, string $password) {
+    try {
+        $sql = "SELECT * FROM usuaris WHERE nickname = :username AND contrasenya = :contra";
+        $statement = $connexio->prepare($sql);
+        
+        $statement->execute( 
+            array(
+            ':username' => $username,
+            ':contra' => $password
+            )
+        );
+        
+        if ($statement->rowCount() > 0) {
+            return "ContrasenyaCorrecta";
+        } else {
+            return "ContrasenyaIncorrecta";
+        }
+
+    } catch (PDOException $e) {
+        $error = "Falla a la connexio a la Base de Dades";
+        return $error;
+    }
+}
+
+function modelAfegeixUsuari(PDO $connexio, string $nom, string $cognoms, string $correu, string $nickname, string $contrasenya) {
+    echo "Estic al insert";
+    try {
+        $sql = "INSERT INTO usuaris (nom, cognoms, correu, nickname, contrasenya) VALUES (:nom, :cognoms, :correu, :nickname, :contrasenya)";
+        $statement = $connexio->prepare($sql);
+        echo "Apunt del INSERT";
+        $statement->execute( 
+            array(
+            ':nom' => $nom, 
+            ':cognoms' => $cognoms,
+            ':correu' => $correu,
+            ':nickname' => $nickname, 
+            ':contrasenya' => $contrasenya )
+        );
+
+        return "SiCreat";
+
+    } catch(PDOException $e){
+        echo $e;
+        return "NoCreat";
+    }
+
+
+}
 
 
 ?>

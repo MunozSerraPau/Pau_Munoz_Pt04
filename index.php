@@ -21,25 +21,21 @@ try {
 
 
 
-    
-$articlesPerPagina = 12;  // Definim 12 articles per pàgina coma maxim
+$champsPerPagina = 12;  // Definim 12 articles per pàgina coma maxim
   
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 
-$inici = ($pagina > 1) ? ($pagina * $articlesPerPagina - $articlesPerPagina) : 0 ;
+$inici = ($pagina > 1) ? ($pagina * $champsPerPagina - $champsPerPagina) : 0 ;
 
-require_once "./Model/modelArticles.php";
-$articles = selectModel($connexio, $inici, $articlesPerPagina);
+require_once "./Model/modelChampions.php";
+$campeons = selectModel($connexio, $inici, $champsPerPagina);
 
-// Comprovem que hagui articles, en cas contrari, rediriguim
-if (!$articles) {
-    header('Location: localhost/Practiques/Pt03/index.vista.php');
-}
 
-require_once "./Model/modelArticles.php";
-$totalArticles = (int) contarArticlesModel($connexio);
 
-$numeroPagines = ceil($totalArticles / $articlesPerPagina);
+require_once "./Model/modelChampions.php";
+$totalChamps = (int) contarChampionsModel($connexio);
+
+$numeroPagines = ceil($totalChamps / $champsPerPagina);
 
 
 include "./Vista/index.vista.php";

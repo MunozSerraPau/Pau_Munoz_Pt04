@@ -10,14 +10,16 @@
      * @return - Retorna una array amb tots els registres de articles de la base de dades o "null" si hi ha algun porblema.
      */
     function selectModel(PDO $connexio, int $inici, int $articlesPerPagines) {
+        echo "HOLAAAAA";
+        
         try {
-            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM articles	LIMIT $inici, $articlesPerPagines";
-            $articles = $connexio->prepare($sql);
+            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM campeones	LIMIT $inici, $articlesPerPagines";
+            $campeons = $connexio->prepare($sql);
 
-            $articles->execute();
+            $campeons->execute();
 
-            $articles = $articles->fetchAll();
-            return $articles;
+            $champs = $campeons->fetchAll();
+            return $champs;
 
         } catch(PDOException $e) {
             return null;
@@ -33,16 +35,16 @@
      * 
      * @return - Retorna una array amb tots els registres de articles de la base de dades o "null" si hi ha algun porblema.
      */
-    function contarArticlesModel(PDO $connexio) :int{
+    function contarChampionsModel(PDO $connexio) :int{
         try {
             $sql = "SELECT FOUND_ROWS() as total";
-            $totalArticles = $connexio->prepare($sql);
+            $totalCampeons = $connexio->prepare($sql);
+            echo "feaf";
+            $totalCampeons->execute();
 
-            $totalArticles->execute();
-
-            $totalArticles = $totalArticles->fetch()['total'];
+            $totalCampeons = $totalCampeons->fetch()['total'];
                 
-            return $totalArticles;
+            return $totalCampeons;
 
         } catch(PDOException $e) {
             return 0;
