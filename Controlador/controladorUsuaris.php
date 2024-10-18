@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 
 
 $host = 'localhost'; // Servidor donde se aloja la base de datos
@@ -70,8 +70,8 @@ function comprovarUsuari(PDO $connexio, string $username, string $password) {
         
         if(password_verify($password, $contra)) {
             $error = "UsuariConnectat";
-            // session_start();
-            // $_SESSION['usuari'] = $username;
+            ini_set('session.gc_maxlifetime', 1 * 60);
+            $_SESSION['usuari'] = $username;
         } elseif($contra === "NoHiHaUsuari") {
             $error = "No hi ha cap Usuari amb aquest NICKNAME";
         } else {
@@ -117,5 +117,9 @@ function afegirUsuari(PDO $connexio, string $nom, string $cognoms, string $corre
     }
 }
 
+
+function sortirUsuari() {
+
+}
 
 ?>

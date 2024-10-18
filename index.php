@@ -20,22 +20,45 @@ try {
 }
 
 
+include_once "./Controlador/controladorUsuaris.php";
+if(isset($_SESSION['usuari'])) {
+    $nomUsuari = $_SESSION['usuari'];
+    $champsPerPagina = 8;  // Definim 6 articles per pàgina coma maxim
 
-$champsPerPagina = 12;  // Definim 12 articles per pàgina coma maxim
+    $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+
+    $inici = ($pagina > 1) ? ($pagina * $champsPerPagina - $champsPerPagina) : 0 ;
+
+    require_once "./Model/modelChampions.php";
+    $campeons = selectUsuariLogiModel($connexio, $inici, $champsPerPagina, $nomUsuari);
+
+
+
+    require_once "./Model/modelChampions.php";
+    $totalChamps = (int) contarChampionsUsuariLoginModel($connexio, $nomUsuari);
+
+    $numeroPagines = ceil($totalChamps / $champsPerPagina);
+
+
+} else {
+    $champsPerPagina = 12;  // Definim 12 articles per pàgina coma maxim
   
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+    $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+    
+    $inici = ($pagina > 1) ? ($pagina * $champsPerPagina - $champsPerPagina) : 0 ;
+    
+    require_once "./Model/modelChampions.php";
+    $campeons = selectModel($connexio, $inici, $champsPerPagina);
+    
+    
+    
+    require_once "./Model/modelChampions.php";
+    $totalChamps = (int) contarChampionsModel($connexio);
+    
+    $numeroPagines = ceil($totalChamps / $champsPerPagina);
+}
 
-$inici = ($pagina > 1) ? ($pagina * $champsPerPagina - $champsPerPagina) : 0 ;
 
-require_once "./Model/modelChampions.php";
-$campeons = selectModel($connexio, $inici, $champsPerPagina);
-
-
-
-require_once "./Model/modelChampions.php";
-$totalChamps = (int) contarChampionsModel($connexio);
-
-$numeroPagines = ceil($totalChamps / $champsPerPagina);
 
 
 include "./Vista/index.vista.php";
