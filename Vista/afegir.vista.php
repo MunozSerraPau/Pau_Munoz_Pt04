@@ -18,10 +18,6 @@
         </symbol>
     </svg>
 
-
-    <?php include "../Controlador/controladorUsuaris.php" ?>
-
-
     <header>
         <!-- Enlace a la izquierda para "Home" -->
         <div class="home">
@@ -41,51 +37,42 @@
             </button>
         </div>
     </header>
+    <h1 style="text-align: center; margin-top: 25px;"><strong>AFEGIR</strong></h1>
+
 
     <!-- Formulario de inicio de sesión -->
     <div class="login-form-container">
+        <?php include_once "../Controlador/controladorAfegirChamp.php" ?>
         <form <?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>, method="POST" class="row g-3 login-form">
-            <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4">
-            </div>
-            <div class="col-md-6">
-                <label for="inputPassword4" class="form-label">Password</label>
-                <input type="password" class="form-control" id="inputPassword4">
+        <div class="col-12">
+                <label for="nomCampio" class="form-label">Nom del Champion</label>
+                <input type="text" class="form-control" id="nomCampio">
             </div>
             <div class="col-12">
-                <label for="inputAddress" class="form-label">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                <label for="descripcio" class="form-label ">Descripcio</label>
+                <textarea id="descripcio" class="form-control" name="descripcio"></textarea>
             </div>
-            <div class="col-12">
-                <label for="inputAddress2" class="form-label">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+
+
+            <div class="col-md-6">
+                <label for="resource" class="form-label">Recurs of Champion</label>
+                <input type="email" class="form-control" id="resource">
             </div>
             <div class="col-md-6">
-                <label for="inputCity" class="form-label">City</label>
-                <input type="text" class="form-control" id="inputCity">
+                <label for="role" class="form-label">Role</label>
+                <select id="role" class="form-select">
+                <option> Marksman </option>
+                <option> Fighter </option>
+                <option> Tank </option>
+                <option> Mage </option>
+                <option> Assassin </option>
+                <option> Controller </option>
+                <option> Specialist </option>
+            </select>
             </div>
-            <div class="col-md-4">
-                <label for="inputState" class="form-label">State</label>
-                <select id="inputState" class="form-select">
-                <option selected>Choose...</option>
-                <option>...</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label for="inputZip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="inputZip">
-            </div>
+            
             <div class="col-12">
-                <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                    Check me out
-                </label>
-                </div>
-            </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Crear Champion</button>
             </div>
         </form>
     </div>

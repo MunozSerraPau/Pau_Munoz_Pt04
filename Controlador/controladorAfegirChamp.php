@@ -1,4 +1,5 @@
-<?php
+<?php 
+
 // Pau Muñoz Serra
 
 $host = 'localhost'; // Servidor donde se aloja la base de datos
@@ -24,7 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
+    if (isset($_POST[''])) {
+
+    } else {
+
+    }
+
 
 }
+
 
 ?>
