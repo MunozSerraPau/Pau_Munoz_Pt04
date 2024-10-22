@@ -24,7 +24,6 @@ try {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
-    echo "COMPROVAR ------   ";
     if(isset($_POST['singup'])) {
         echo "SING UP";
         $nom = ($_POST['firstname']);

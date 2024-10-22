@@ -1,6 +1,6 @@
 <?php 
 // Pau Muñoz Serra
-
+require "../Model/modelEditarChampions.php";
 
 $host = 'localhost'; // Servidor donde se aloja la base de datos
 $dbname = 'pt04_pau_munoz'; // Nombre de la base de datos
@@ -44,8 +44,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } 
 
     if($error === "<br>") {
-        require_once "../Model/modelEditarChampions.php";
-        $afegirChamp = modelAfegirCampio($connexio, $nom, $descripcio, $recurs, $rol);
+        if(isset($_SESSION['usuari'])){ $nomUsuari = $_SESSION['usuari']; }; 
+        $champDuplicat = modelComprovarNom($connexio, $nom);
+
+        if ($champDuplicat === "ChampNoDuplicat") {
+            $afegirChamp = modelAfegirCampio($connexio, $nom, $descripcio, $recurs, $rol, $nomUsuari);
+            if($afegirChamp === "SiCreat") {
+                $error = "ChampCreat";
+            }
+        } else {
+            $error = "Error el NOM del campio ja EXISTEIX<br>";
+        }
+        
+       
     }
 }
 

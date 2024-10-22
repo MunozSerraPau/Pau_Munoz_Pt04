@@ -3,7 +3,6 @@
 
 function modelNickNameExisteixLogin(PDO $connexio, string $username) {
     try {
-        echo "        KLK COMPROVANT NOM     ";
         $sql = "SELECT contrasenya FROM usuaris WHERE nickname = :username";
         $statement = $connexio->prepare($sql);
         
@@ -52,11 +51,9 @@ function modelContrasenyaIgualLogin(PDO $connexio, string $username, string $pas
 }
 
 function modelAfegeixUsuari(PDO $connexio, string $nom, string $cognoms, string $correu, string $nickname, string $contrasenya) {
-    echo "Estic al insert";
     try {
         $sql = "INSERT INTO usuaris (nom, cognoms, correu, nickname, contrasenya) VALUES (:nom, :cognoms, :correu, :nickname, :contrasenya)";
         $statement = $connexio->prepare($sql);
-        echo "Apunt del INSERT";
         $statement->execute( 
             array(
             ':nom' => $nom, 
@@ -69,7 +66,6 @@ function modelAfegeixUsuari(PDO $connexio, string $nom, string $cognoms, string 
         return "SiCreat";
 
     } catch(PDOException $e){
-        echo $e;
         return "NoCreat";
     }
 
