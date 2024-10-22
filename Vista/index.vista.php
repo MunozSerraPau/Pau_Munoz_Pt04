@@ -56,7 +56,7 @@
                                 <p><?php echo $champion['role']; ?></p>
                             </div>
                             <div class="d-flex jus justify-content-between aling-items-center">
-                                <p class="card-text"> <?php echo $champion['creator']; ?> </p>
+                                <p class="card-text"><i> <?php echo $champion['creator']; ?> </i></p>
                                 <div>
                                     <a href="#" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
                                     <a href="#" class="btn btn-warning"><i class="bi bi-pen"></i></a>
@@ -67,10 +67,13 @@
                 </div>
             <?php endforeach; ?>
         </div>
+        
             
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <?php if($pagina == 1): ?>
+                <?php if($pagina == 0): ?>
+                    <li class="page-item"><a class="page-link disabled">Enrere</a></li>
+                <?php elseif($pagina == 1): ?>
                     <li class="page-item"><a class="page-link disabled">Enrere</a></li>
                 <?php else: ?>
                     <li class="page-item"><a class="page-link" href="?pagina=<?php echo $pagina - 1 ?>">Enrere</a></li>
@@ -85,8 +88,9 @@
                     <?php endif ?>
                 <?php endfor ?>
 
-
-                <?php if($pagina == $numeroPagines): ?>
+                <?php if($pagina == 0): ?>
+                    <li class="page-item"><a class="page-link disabled">Següent</a></li>
+                <?php elseif($pagina == $numeroPagines): ?>
                     <li class="page-item"><a class="page-link disabled">Següent</a></li>
                 <?php else: ?>
                     <li class="page-item"><a class="page-link" href="?pagina=<?php echo $pagina + 1 ?>">Següent</a></li>
@@ -129,7 +133,7 @@
                                 <p><?php echo $champion['role']; ?></p>
                             </div>
                             <div class="d-flex jus justify-content-between aling-items-center">
-                                <p class="card-text"> <?php echo $champion['creator']; ?> </p>
+                                <p class="card-text"><i> <?php echo $champion['creator']; ?> </i></p>
                             </div>
                         </div>
                     </div>
@@ -139,20 +143,26 @@
             
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <?php if($pagina == 1): ?>
+            <?php if($pagina == 0): ?>
+                    <li class="page-item"><a class="page-link disabled">Enrere</a></li>
+                <?php elseif($pagina == 1): ?>
                     <li class="page-item"><a class="page-link disabled">Enrere</a></li>
                 <?php else: ?>
                     <li class="page-item"><a class="page-link" href="?pagina=<?php echo $pagina - 1 ?>">Enrere</a></li>
                 <?php endif; ?>
+
+
                 <?php for($i = 1; $i <= $numeroPagines; $i++): ?>
-                        <?php if ($pagina === $i): ?>
-                            <li class='page-item disabled'><a class='page-link' href='?pagina=<?php echo $i ?>'><?php echo $i ?></a></li>
-                        <?php else: ?>
-                            <li class='page-item'><a class='page-link' href='?pagina=<?php echo $i ?>'><?php echo $i ?></a></li>
-                        <?php endif ?>
-                        
+                    <?php if ($pagina === $i): ?>
+                        <li class='page-item disabled'><a class='page-link' href='?pagina=<?php echo $i ?>'><?php echo $i ?></a></li>
+                    <?php else: ?>
+                        <li class='page-item'><a class='page-link' href='?pagina=<?php echo $i ?>'><?php echo $i ?></a></li>
+                    <?php endif ?>
                 <?php endfor ?>
-                <?php if($pagina == $numeroPagines): ?>
+
+                <?php if($pagina == 0): ?>
+                    <li class="page-item"><a class="page-link disabled">Següent</a></li>
+                <?php elseif($pagina == $numeroPagines): ?>
                     <li class="page-item"><a class="page-link disabled">Següent</a></li>
                 <?php else: ?>
                     <li class="page-item"><a class="page-link" href="?pagina=<?php echo $pagina + 1 ?>">Següent</a></li>

@@ -37,7 +37,12 @@ if(isset($_SESSION['usuari'])) {
     require_once "./Model/modelChampions.php";
     $totalChamps = (int) contarChampionsUsuariLoginModel($connexio, $nomUsuari);
 
-    $numeroPagines = ceil($totalChamps / $champsPerPagina);
+    if ($totalChamps == 0) {
+        $pagina = 0;
+        $numeroPagines = ceil($totalChamps / $champsPerPagina);
+    } else {
+        $numeroPagines = ceil($totalChamps / $champsPerPagina);
+    }
 
 
 } else {
@@ -55,8 +60,13 @@ if(isset($_SESSION['usuari'])) {
     require_once "./Model/modelChampions.php";
     $totalChamps = (int) contarChampionsModel($connexio);
     
-    $numeroPagines = ceil($totalChamps / $champsPerPagina);
-}
+
+    if ($totalChamps == 0) {
+        $pagina = 0;
+        $numeroPagines = ceil($totalChamps / $champsPerPagina);
+    } else {
+        $numeroPagines = ceil($totalChamps / $champsPerPagina);
+    }}
 
 
 
