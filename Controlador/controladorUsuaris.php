@@ -26,12 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if(isset($_POST['singup'])) {
         echo "SING UP";
-        $nom = ($_POST['firstname']);
-        $cognoms = ($_POST['lastname']);
-        $correu = ($_POST['email']);
-        $nickname = ($_POST['nickname']);
-        $contrasenya = ($_POST['password']);
-        $confirmPassword = ($_POST['confirm-password']);
+        $nom = htmlspecialchars($_POST['firstname']);
+        $cognoms = htmlspecialchars($_POST['lastname']);
+        $correu = htmlspecialchars($_POST['email']);
+        $nickname = htmlspecialchars($_POST['nickname']);
+        $contrasenya = htmlspecialchars($_POST['password']);
+        $confirmPassword = htmlspecialchars($_POST['confirm-password']);
 
         $shaCreat = afegirUsuari($connexio, $nom, $cognoms, $correu, $nickname, $contrasenya, $confirmPassword);
 
@@ -44,11 +44,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else if (isset($_POST['login'])) {
         echo "LOGIN";
-        $nickname = ($_POST['username']);
-        $contrasenya = ($_POST['password']);
+        $nickname = htmlspecialchars($_POST['username']);
+        $contrasenya = htmlspecialchars($_POST['password']);
 
         $existeixUsuari = comprovarUsuari($connexio, $nickname, $contrasenya);
         $error = $existeixUsuari;
+
+
+    } else if (isset($_POST['canviContrasenya'])) {
+        echo "Canviar Contrasenya";
+
+        $contraActual = htmlspecialchars($_POST['contrasenyaActual']);
+        $contraNovaV1 = htmlspecialchars($_POST['contrasenyaNova1']);
+        $contraNovaV2 = htmlspecialchars($_POST['contrasenyaNova2']);
+
+        $canviContrasenya = canviarContrasenya($connexio, $contraActual, $contraNovaV1, $contraNovaV2);
+        $error = $canviContrasenya;
+
     }
 
 }
@@ -71,10 +83,14 @@ function comprovarUsuari(PDO $connexio, string $username, string $password) {
             $error = "UsuariConnectat";
             ini_set('session.gc_maxlifetime', 1 * 60);
             $_SESSION['usuari'] = $username;
+
         } elseif($contra === "NoHiHaUsuari") {
             $error = "No hi ha cap Usuari amb aquest NICKNAME";
+            unset($_POST['username']);
+
         } else {
             $error = "La CONTRASENYA no coninsideix";
+
         }
 
     }
@@ -114,6 +130,55 @@ function afegirUsuari(PDO $connexio, string $nom, string $cognoms, string $corre
     } else {
         return $error;
     }
+}
+
+function canviarContrasenya (PDO $connexio, string $contraActual, string $contraNovaV1, string $contraNovaV2) {
+    $validarContrasenya = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:,.<>?])[A-Za-z\d!@#$%^&*()_\-+=\[\]{};:,.<>?]{8,}$/';
+
+
+    require_once "../Model/modelUsuaris.php";
+    $error = "<br>";
+
+    if(empty($contraActual)) {
+        $error .= "Error no has ficat la CONTRASENYA ACTUAL<br>";
+
+    } elseif (empty($contraNovaV1)) {
+        $error .= "Error no has ficat la CONTRASENYA NOVA<br>";
+
+    } elseif (empty($contraNovaV2)) {
+        $error .= "Error no has ficat la CONTRASENYA NOVA REPETIDA<br>";
+
+    } elseif (!preg_match($validarContrasenya, $contraNovaV1)) {
+        $error .= "La nova CONTRASENYA no compleix els requisits. <br>(1 majúscula, 1 minúscula, 1 caràcter especial, 1 número i 8 caracters mínim.)<br>";
+    } elseif ($contraNovaV1 != $contraNovaV2) {
+        unset($_POST['contraNovaV1']);
+        unset($_POST['contraNovaV2']);
+        $error .= "Error les CONTRASENYAS novas NO COINSIDEIX";
+
+    } else {
+        $nomUsuari = $_SESSION['usuari'];
+        echo $nomUsuari;
+        $contra = modelNickNameExisteixLogin($connexio, $nomUsuari);
+        
+        if(password_verify($contraActual, $contra)) {
+            $hashPassword = password_hash($contraNovaV1, PASSWORD_DEFAULT);
+            $canviContrasenya = modelCanviContrasenya($connexio, $nomUsuari, $hashPassword);
+
+            if ($canviContrasenya === "ContrasenyaCanviada"){
+                $error = "Contrasenya Actualitzada";
+                unset($_POST['contrasenyaActual']);
+                unset($_POST['contrasenyaNova1']);
+                unset($_POST['contrasenyaNova2']);
+
+            } else {
+                $error = $canviContrasenya;
+            }
+        } else {
+            $error = "La CONTRASENYA no es la del USUARI ";
+        } 
+    }
+
+    return $error;
 }
 
 ?>

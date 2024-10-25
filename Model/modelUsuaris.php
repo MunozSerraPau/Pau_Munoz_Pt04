@@ -72,5 +72,22 @@ function modelAfegeixUsuari(PDO $connexio, string $nom, string $cognoms, string 
 
 }
 
+function modelCanviContrasenya(PDO $connexio, string $nickName, string $contraNovaV1) {
+    try {
+        $sql = "UPDATE usuaris  SET contrasenya = :contrasenya WHERE nickname = :nom";
+        $statement = $connexio->prepare($sql);
+        $statement->execute( 
+            array(
+                ':contrasenya' => $contraNovaV1,
+                ':nom' => $nickName
+            )
+        );
+
+        return "ContrasenyaCanviada";
+    } catch(PDOException $e) {
+        return "Error amb la connexio o el Nom d'Usuari";
+    }
+}
+
 
 ?>
