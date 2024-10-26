@@ -56,7 +56,7 @@ function modelAfegeixUsuari(PDO $connexio, string $nom, string $cognoms, string 
         $statement = $connexio->prepare($sql);
         $statement->execute( 
             array(
-            ':nom' => $nom, 
+            ':nom' => $nom,
             ':cognoms' => $cognoms,
             ':correu' => $correu,
             ':nickname' => $nickname, 
@@ -66,7 +66,7 @@ function modelAfegeixUsuari(PDO $connexio, string $nom, string $cognoms, string 
         return "SiCreat";
 
     } catch(PDOException $e){
-        return "NoCreat";
+        return $e;
     }
 
 
