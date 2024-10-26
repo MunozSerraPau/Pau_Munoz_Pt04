@@ -24,10 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error en la conexión: " . $e->getMessage());
     }
 
-    $nom = ($_POST['nomCampio']);
-    $descripcio = ($_POST['descripcio']);
-    $recurs = ($_POST['resource']);
-    $rol = ($_POST['role']);
+    $nom = htmlspecialchars($_POST['nomCampio']);
+    $descripcio = htmlspecialchars($_POST['descripcio']);
+    $recurs = htmlspecialchars($_POST['resource']);
+    $rol = htmlspecialchars($_POST['role']);
 
 
     if(empty($nom)) {

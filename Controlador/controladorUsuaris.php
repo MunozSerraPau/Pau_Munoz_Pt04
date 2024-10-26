@@ -44,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } else if (isset($_POST['login'])) {
         echo "LOGIN";
+        
         $nickname = htmlspecialchars($_POST['username']);
         $contrasenya = htmlspecialchars($_POST['password']);
 
@@ -98,26 +99,27 @@ function comprovarUsuari(PDO $connexio, string $username, string $password) {
     return $error;
 }
 
-function afegirUsuari(PDO $connexio, string $nom, string $cognoms, string $correu, string $nickname, string $contrasenya, string $confirmPassword) {
+function afegirUsuari(PDO $connexio, string $nom, string $cognoms, string $correu, string $nickname, string $contrasenya, string $confirmPassword) {    
+    $validarContrasenya = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:,.<>?])[A-Za-z\d!@#$%^&*()_\-+=\[\]{};:,.<>?]{8,}$/';
+
     require_once "../Model/modelUsuaris.php";
     $error = "<br>";
     
     if(empty($nom)) {
         $error .= "Error no has ficat el NOM<br>";
-    } 
-    if (empty($cognoms)) {
+    } else if (empty($cognoms)) {
         $error .= "Error no has ficat els COGNOMS<br>";
-    } 
-    if (empty($correu)) {
+    } else if (empty($correu)) {
         $error .= "Error no has ficat el CORREU<br>";
-    } 
-    if (empty($nickname)) {
+    } else if (empty($nickname)) {
         $error .= "Error no has ficat el NICKNAME<br>";
-    } 
-    if (empty($contrasenya)) {
+    } else if (empty($contrasenya)) {
         $error .= "Error no has ficat CONTRASENYA<br>";
-    }
-    if (empty($confirmPassword)) {
+    } elseif (!preg_match($validarContrasenya, $contrasenya)) {
+        unset($_POST['password']);
+        unset($_POST['confirm-password']);
+        $error .= "La nova CONTRASENYA no compleix els requisits. <br>(1 majúscula, 1 minúscula, 1 caràcter especial, 1 número i 8 caracters mínim.)<br>";
+    } else if (empty($confirmPassword)) {
         $error .= "Error no has ficat la CONFIRMACIÓ de la CONTRASENYA<br>";
     } else if ($contrasenya !== $confirmPassword) {
         $error .= "Error les CONTRASENYES NO coinsideixen<br>";
@@ -126,6 +128,11 @@ function afegirUsuari(PDO $connexio, string $nom, string $cognoms, string $corre
     if($error === "<br>") {
         $hashPassword = password_hash($contrasenya, PASSWORD_DEFAULT);
         $crearUsuari = modelAfegeixUsuari($connexio, $nom, $cognoms, $correu, $nickname, $hashPassword);
+        unset($_POST['firstname']);
+        unset($_POST['lastname']);
+        unset($_POST['email']);
+        unset($_POST['nickname']);
+        
         return $crearUsuari;
     } else {
         return $error;

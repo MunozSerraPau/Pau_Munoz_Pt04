@@ -9,10 +9,10 @@
      * 
      * @return - Retorna una array amb tots els registres de articles de la base de dades o "null" si hi ha algun porblema.
      */
-    function selectModel(PDO $connexio, int $inici, int $articlesPerPagines) {
+    function selectModel(PDO $connexio, int $inici, int $champsPerPagines) {
         
         try {
-            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM campeones	LIMIT $inici, $articlesPerPagines";
+            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM campeones	LIMIT $inici, $champsPerPagines";
             $campeons = $connexio->prepare($sql);
 
             $campeons->execute();

@@ -66,7 +66,8 @@ if(isset($_SESSION['usuari'])) {
         $numeroPagines = ceil($totalChamps / $champsPerPagina);
     } else {
         $numeroPagines = ceil($totalChamps / $champsPerPagina);
-    }}
+    }
+}
 
 
 

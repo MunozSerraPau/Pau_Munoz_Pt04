@@ -9,6 +9,11 @@
     <title>HOME</title>
 </head>
 <body>
+    <script>
+        function confirmarEliminacion() {
+            return confirm("¿Estás seguro de que quieres eliminar este artículo?");
+        }
+    </script>
 
     <?php include_once "./Controlador/controladorUsuaris.php" ?>
     <?php if(isset($_SESSION['usuari'])): $nomUsuari = $_SESSION['usuari'] ?>
@@ -58,8 +63,12 @@
                             <div class="d-flex jus justify-content-between aling-items-center">
                                 <p class="card-text"><i> <?php echo $champion['creator']; ?> </i></p>
                                 <div>
-                                    <a href="../Controlador/controladorChamps.php?id=<?php echo $champion['id'] ?>&action=delete" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
-                                    <a href="#" class="btn btn-warning"><i class="bi bi-pen"></i></a>
+                                    <a href="./Controlador/controladorEliminar.php?id=<?php echo $champion['id'] ?>&action=delete" class="btn btn-danger" onclick="return confirmarEliminacion()">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                    <a href="./Controlador/controladorEditar.php?id=<?php echo $champion['id'] ?>" class="btn btn-warning">
+                                        <i class="bi bi-pen"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>

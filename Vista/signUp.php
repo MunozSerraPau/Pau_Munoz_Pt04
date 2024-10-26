@@ -48,19 +48,19 @@
             <h2>Crea un compte</h2>
             <div class="form-group">
                 <label for="firstname">Nom: </label>
-                <input type="text" id="firstname" name="firstname">
+                <input type="text" id="firstname" name="firstname" value="<?php if (isset($_POST['firstname'])) { echo $_POST['firstname']; } ?>">
             </div>
             <div class="form-group">
                 <label for="lastname">Cognoms: </label>
-                <input type="text" id="lastname" name="lastname">
+                <input type="text" id="lastname" name="lastname" value="<?php if (isset($_POST['lastname'])) { echo $_POST['lastname']; } ?>">
             </div>
             <div class="form-group">
                 <label for="email">Correu: </label>
-                <input type="email" id="email" name="email">
+                <input type="email" id="email" name="email" value="<?php if (isset($_POST['email'])) { echo $_POST['email']; } ?>">
             </div>
             <div class="form-group">
                 <label for="nickname">Nom d'Usuari: </label>
-                <input type="text" id="nickname" name="nickname">
+                <input type="text" id="nickname" name="nickname" value="<?php if (isset($_POST['nickname'])) { echo $_POST['nickname']; } ?>">
             </div>
             <div class="form-group">
                 <label for="password">Contrasenya: </label>
