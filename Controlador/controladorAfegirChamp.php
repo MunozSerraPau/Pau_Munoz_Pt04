@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $recurs = htmlspecialchars($_POST['resource']);
     $rol = htmlspecialchars($_POST['role']);
 
-
+    // fem comprovacións de si esta tot be o no
     if(empty($nom)) {
         $error .= "Error no has ficat el NOM<br>";
     } 
@@ -44,12 +44,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } 
 
     if($error === "<br>") {
-        if(isset($_SESSION['usuari'])){ $nomUsuari = $_SESSION['usuari']; }; 
+        // obtenir el nostre NickName
+        if(isset($_SESSION['usuari'])){ $nomUsuari = $_SESSION['usuari']; };
+        // mirem que no estigui duplicat
         $champDuplicat = modelComprovarNom($connexio, $nom);
 
         if ($champDuplicat === "ChampNoDuplicat") {
+            // afegim el nou campio
             $afegirChamp = modelAfegirCampio($connexio, $nom, $descripcio, $recurs, $rol, $nomUsuari);
             if($afegirChamp === "SiCreat") {
+                // salta error si esta duplicat
                 $error = "ChampCreat";
             }
         } else {

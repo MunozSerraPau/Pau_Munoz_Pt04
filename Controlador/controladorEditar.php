@@ -24,41 +24,36 @@ $connexio->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     die("Error en la conexión: " . $e->getMessage());
 }
 
-echo "123123423534";
-// Verifiquem que s'ha rebut l'id
+
+// Verifiquem que s'ha rebut l'id per POST i es per recollir les dades i modificar el campio
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "gsrgsrg";
     if (isset($_POST['updateChamp'])) {
-        echo "·········";
+        // guardem les dades
         $id = trim(htmlspecialchars($_GET['id']));
         $name = htmlspecialchars($_POST['nomCampio']);
         $description = htmlspecialchars($_POST['descripcio']);
         $recurce = htmlspecialchars($_POST['resource']);
         $role = htmlspecialchars($_POST['role']);
 
+        // modifiquem el campio i el redirigim al index unaltre cop
         modelModificarCampion($connexio, $name, $description, $recurce, $role, $id);
         header("Location: ../index.php");
         
-        
-
-        /*if ($stmt->execute()) {
-            echo "<script>alert('Registre actualitzat correctament');</script>";
-            echo "<script>window.location.href = '../Vista/listaChamps.php';</script>";
-        } else {
-            echo "<script>alert('Error en actualitzar el registre');</script>";
-        }
-        */
     }
+    // Aquí es per redirigirnos a la vista per editar el camp amb get
 } elseif (isset($_GET['id'])) { 
+    // guardem le id
     $id = trim(htmlspecialchars($_GET['id']));
 
-    echo "HOLAAAAAefsfsefAAAAAAAAAAAAAAAAAA";
-
+    // guardem el campio per poder obtenir les dades mes endavant i poderlas imprimir
     $champ = modelObtenirDadesChamp($connexio, $id);
 
+    
     if (!empty($champ)) {
+        // sino esta buit l'enviem a la vista per editar-ho
         include "../Vista/update.vista.php";
     } else {
+        // sino tornem al index
         echo "<script>alert('No s\'ha trobat el registre');</script>";
         header("Location: ../index.php");
     }
@@ -68,43 +63,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 
-
-function actualitzarChamp(PDO $connexio, string $nom, string $descripcio, string $recurs, string $rol, string $id) {    
-
-    require_once "../Model/modelEditarChampions.php";
-    $error = "<br>";
-    
-    if(empty($id)) {
-        $error .= "Error no has ficat el NOM<br>";
-    } else if (empty($cognoms)) {
-        $error .= "Error no has ficat els COGNOMS<br>";
-    } else if (empty($correu)) {
-        $error .= "Error no has ficat el CORREU<br>";
-    } else if (empty($nickname)) {
-        $error .= "Error no has ficat el NICKNAME<br>";
-    } else if (empty($contrasenya)) {
-        $error .= "Error no has ficat CONTRASENYA<br>";
-    } elseif (!preg_match($validarContrasenya, $contrasenya)) {
-        unset($_POST['password']);
-        unset($_POST['confirm-password']);
-        $error .= "La nova CONTRASENYA no compleix els requisits. <br>(1 majúscula, 1 minúscula, 1 caràcter especial, 1 número i 8 caracters mínim.)<br>";
-    } else if (empty($confirmPassword)) {
-        $error .= "Error no has ficat la CONFIRMACIÓ de la CONTRASENYA<br>";
-    } else if ($contrasenya !== $confirmPassword) {
-        $error .= "Error les CONTRASENYES NO coinsideixen<br>";
-    }
-    
-    if($error === "<br>") {
-        $hashPassword = password_hash($contrasenya, PASSWORD_DEFAULT);
-        $crearUsuari = modelAfegeixUsuari($connexio, $nom, $cognoms, $correu, $nickname, $hashPassword);
-        unset($_POST['firstname']);
-        unset($_POST['lastname']);
-        unset($_POST['email']);
-        unset($_POST['nickname']);
-        
-        return $crearUsuari;
-    } else {
-        return $error;
-    }
-}
 ?>

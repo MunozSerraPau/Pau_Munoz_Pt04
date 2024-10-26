@@ -1,4 +1,5 @@
-<?php 
+<?php
+// Pau Munoz Serrra
 session_start();
 
 
@@ -23,9 +24,9 @@ try {
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+    // mira si ens han passat parametre per afegir un nou usuari
     if(isset($_POST['singup'])) {
-        echo "SING UP";
+        // Guardem les dades
         $nom = htmlspecialchars($_POST['firstname']);
         $cognoms = htmlspecialchars($_POST['lastname']);
         $correu = htmlspecialchars($_POST['email']);
@@ -33,18 +34,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $contrasenya = htmlspecialchars($_POST['password']);
         $confirmPassword = htmlspecialchars($_POST['confirm-password']);
 
+        // Creem l'Usuari
         $shaCreat = afegirUsuari($connexio, $nom, $cognoms, $correu, $nickname, $contrasenya, $confirmPassword);
 
+        // Fem la comprovació
         if($shaCreat === "SiCreat") {
             $error = "S'ha creat Correctament";
         } else {
             $error = $shaCreat;
         }
 
-
+    // mira si ens han passat parametre per fer login
     } else if (isset($_POST['login'])) {
-        echo "LOGIN";
-        
+        // guardem les dades i iniciem sessió comprobant si tenim un user i password en la nostra bd
         $nickname = htmlspecialchars($_POST['username']);
         $contrasenya = htmlspecialchars($_POST['password']);
 
@@ -54,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     } else if (isset($_POST['canviContrasenya'])) {
-        echo "Canviar Contrasenya";
+        //guardem les dades i canviem la contrasenye
 
         $contraActual = htmlspecialchars($_POST['contrasenyaActual']);
         $contraNovaV1 = htmlspecialchars($_POST['contrasenyaNova1']);
@@ -71,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 function comprovarUsuari(PDO $connexio, string $username, string $password) {
     require_once "../Model/modelUsuaris.php";
 
+    //mirem si hi halgun camp buit
     if (empty($username) && empty($password)) {
         $error = "Nom d'Usuari i contrasenya BUIDA!";
     } elseif (empty($username)){
@@ -79,18 +82,20 @@ function comprovarUsuari(PDO $connexio, string $username, string $password) {
         $error = "La contrasenya esta BUIDA!";
     } else {
 
+        // Obtenim la contrasenya
         $contra = modelNickNameExisteixLogin($connexio, $username);
-        
+        //mirem si la contrassenya es igual
         if(password_verify($password, $contra)) {
+            // Creem la session i guardem el nickname del Usuari
             $error = "UsuariConnectat";
             ini_set('session.gc_maxlifetime', 1 * 60);
             $_SESSION['usuari'] = $username;
 
-            // Generar un token único y seguro para el usuario
+            // Genera un token unic i segur per l'usuari
             $token = bin2hex(random_bytes(16));
 
-            // Si el usuario seleccionó "recuérdame", establecer cookies
-            if (isset($_POST['remember_me'])) {
+            // Si l'Usuari ha seleccionat "r", establecer cookies
+            if (isset($_POST['recuerdame'])) {
                 setcookie('nickname', $username, time() + (30 * 24 * 60 * 60), "/");
                 setcookie('contra_token', $token, time() + (30 * 24 * 60 * 60), "/");
             }
@@ -110,11 +115,13 @@ function comprovarUsuari(PDO $connexio, string $username, string $password) {
 }
 
 function afegirUsuari(PDO $connexio, string $nom, string $cognoms, string $correu, string $nickname, string $contrasenya, string $confirmPassword) {    
+    // El regex per fer la comprovació de seguretat de la contrasenya
     $validarContrasenya = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:,.<>?])[A-Za-z\d!@#$%^&*()_\-+=\[\]{};:,.<>?]{8,}$/';
 
     require_once "../Model/modelUsuaris.php";
     $error = "<br>";
     
+    // Mirem si hi ha algun camp buit, si la contrasenya compleix els requisits i si les dos contrasenyes son iguals
     if(empty($nom)) {
         $error .= "Error no has ficat el NOM<br>";
     } else if (empty($cognoms)) {
@@ -135,6 +142,7 @@ function afegirUsuari(PDO $connexio, string $nom, string $cognoms, string $corre
         $error .= "Error les CONTRASENYES NO coinsideixen<br>";
     }
     
+    // si no s'ha afegit res a error encriptem la contrasenya i creem l'Uusari
     if($error === "<br>") {
         $hashPassword = password_hash($contrasenya, PASSWORD_DEFAULT);
         $crearUsuari = modelAfegeixUsuari($connexio, $nom, $cognoms, $correu, $nickname, $hashPassword);
@@ -142,7 +150,8 @@ function afegirUsuari(PDO $connexio, string $nom, string $cognoms, string $corre
         unset($_POST['lastname']);
         unset($_POST['email']);
         unset($_POST['nickname']);
-        
+        unset($_POST['password']);
+        unset($_POST['confirm-password']);
         return $crearUsuari;
     } else {
         return $error;
@@ -150,12 +159,15 @@ function afegirUsuari(PDO $connexio, string $nom, string $cognoms, string $corre
 }
 
 function canviarContrasenya (PDO $connexio, string $contraActual, string $contraNovaV1, string $contraNovaV2) {
+    // El regex per fer la comprovació de seguretat de la contrasenya
     $validarContrasenya = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:,.<>?])[A-Za-z\d!@#$%^&*()_\-+=\[\]{};:,.<>?]{8,}$/';
 
 
     require_once "../Model/modelUsuaris.php";
     $error = "<br>";
 
+
+    // Mirem si hi ha algun camp buit, si la nova contrasenya compleix els requisits i si les dos contrasenyes son iguals
     if(empty($contraActual)) {
         $error .= "Error no has ficat la CONTRASENYA ACTUAL<br>";
 
@@ -173,14 +185,18 @@ function canviarContrasenya (PDO $connexio, string $contraActual, string $contra
         $error .= "Error les CONTRASENYAS novas NO COINSIDEIX";
 
     } else {
+        //obtenim el usuari actual
         $nomUsuari = $_SESSION['usuari'];
-        echo $nomUsuari;
+        // obtenim la contra actual
         $contra = modelNickNameExisteixLogin($connexio, $nomUsuari);
         
+        //mirem que sigui igual
         if(password_verify($contraActual, $contra)) {
+            // encriptem la nova contrasenya
             $hashPassword = password_hash($contraNovaV1, PASSWORD_DEFAULT);
+            // i la canviem amb la noova contrasenya encriptada
             $canviContrasenya = modelCanviContrasenya($connexio, $nomUsuari, $hashPassword);
-
+            // aquí verifiquem que s'ha actualitzat
             if ($canviContrasenya === "ContrasenyaCanviada"){
                 $error = "Contrasenya Actualitzada";
                 unset($_POST['contrasenyaActual']);

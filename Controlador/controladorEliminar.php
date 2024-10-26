@@ -28,20 +28,23 @@ $connexio->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $nomUsuari = $_SESSION['usuari'];
 
 
-// Verifiquem que s'han rebut els paràmetres 'id' i 'action'
+// Verifiquem que s'han rebut els paràmetres 'id' i 'action' per via GET
 if (isset($_GET["id"]) && isset($_GET["action"])) {
     $id = trim(htmlspecialchars($_GET["id"]));
     $action = trim(htmlspecialchars($_GET["action"]));
 
-    // Executar l'acció segons el valor de 'action'
+    // Executar si ens han passat "delete" per confirmar-ho
     if ($action === "delete") {
+        // Comprovem si l'usuari coinsideix amb la id del camp
         $comprovarUsuari = modelComprovarUsuariId($connexio, $nomUsuari, $id);
         if($comprovarUsuari === "LaCreatEll") {
+            //  Ara eliminem el campio
             if (modelEliminarCampion($connexio, $id) === "ELIMINAT") {
+                // esperem 3 segons i ens redirigeix al index.php
                 sleep(3);
                 header("Location: ../index.php");
             } else {
-                echo "<script>alert('ERROR amb la BASE DE DADES');</script>";
+                //  Sino ens envia directement al index despres de 3 segons
                 sleep(3);
                 header("Location: ../index.php");
             }
