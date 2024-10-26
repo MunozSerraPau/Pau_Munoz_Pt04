@@ -9,6 +9,8 @@
     <title>HOME</title>
 </head>
 <body>
+
+    <!-- Script per fer la comprovació de eliminar el campio i que no s'elimini directament -->
     <script>
         function confirmarEliminacion() {
             return confirm("¿Estás seguro de que quieres eliminar este artículo?");
@@ -16,6 +18,8 @@
     </script>
 
     <?php include_once "./Controlador/controladorUsuaris.php" ?>
+    
+    <!-- Mirem si estem logeats i obtenim el nom del Usari amb el que estem -->
     <?php if(isset($_SESSION['usuari'])): $nomUsuari = $_SESSION['usuari'] ?>
         <!--aqui crear els selects pero nomes els que tinguin el nickname amb que s'ha iniciat secció  -->
         <header>
@@ -49,6 +53,7 @@
         </div>
 
         <div class="row row-cols-1 row-cols-md-4 g-5">
+            <!-- foreach per mostrar tos els campions que tenim d'una manera que es mostran com cartes -->
             <?php foreach ($campeons as $champion): ?>
                 <div class="col">
                     <div class="card" style="border-radius: 0px 0px 30px 30px; ">
@@ -62,6 +67,7 @@
                             </div>
                             <div class="d-flex jus justify-content-between aling-items-center">
                                 <p class="card-text"><i> <?php echo $champion['creator']; ?> </i></p>
+                                <!-- en aqeust cas com estem logeats tenim dos buttons per poder editar i modificar els campions ja que nomes es mostren els qeu hem creat nosltres -->
                                 <div>
                                     <a href="./Controlador/controladorEliminar.php?id=<?php echo $champion['id'] ?>&action=delete" class="btn btn-danger" onclick="return confirmarEliminacion()">
                                         <i class="bi bi-trash3-fill"></i>
@@ -77,7 +83,7 @@
             <?php endforeach; ?>
         </div>
         
-            
+        <!-- part per fer la paguinacio dels champs  -->
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <?php if($pagina == 0): ?>

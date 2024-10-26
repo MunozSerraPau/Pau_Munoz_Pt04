@@ -47,6 +47,8 @@
                 <label for="username">Usuario</label>
                 <input type="text" id="username" name="username" value="<?php if (isset($_POST['username'])) { echo $_POST['username']; } ?>">
             </div>
+
+            <!-- en aquest cas mi guardo la contrasenya estiguin igulas o no han de posar-la de nou per tema seguretat -->
             <div class="form-group">
                 <label for="password">Contraseña</label>
                 <input type="password" id="password" name="password">
@@ -55,6 +57,7 @@
                 <input type="checkbox" name="recuerdame"> Recuérdame
             </label>
 
+            <!-- No esta implementada -->
             <p class="form-footer">Has oblidat la contrasenya? <a href="#">Recuperar</a></p> <br>
 
             <?php if (isset($error)):   // Comprova si la variable "error" existeix ?> 

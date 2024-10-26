@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-12">
                     <label for="descripcio" class="form-label ">Descripcio</label>
-                    <textarea type="text" class="form-control" name="descripcio"><?php echo $champ['description']; ?></textarea>
+                    <textarea type="text" class="form-control" name="descripcio"><?php echo $champ['description']; // En aquest cas es mostren segons el select que hem fet abans que es el camp que volem editar?></textarea>
                 </div>
 
 

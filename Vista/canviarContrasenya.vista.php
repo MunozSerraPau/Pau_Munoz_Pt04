@@ -41,7 +41,7 @@
             <br>
             <div class="form-group">
                 <label for="contrasenyaActual">Contrasenya Actual</label>
-                <input type="password" id="contrasenyaActual" name="contrasenyaActual" value="<?php if (isset($_POST['contrasenyaActual'])) { echo $_POST['contrasenyaActual']; } ?>">
+                <input type="password" id="contrasenyaActual" name="contrasenyaActual" value="<?php if (isset($_POST['contrasenyaActual'])) { echo $_POST['contrasenyaActual']; } // Aixo fa que si li doenm a enviar encar es mantengin les dades ?>">
             </div>
             <div class="form-group">
                 <label for="contrasenyaNova1">Contrasenya Nova</label>

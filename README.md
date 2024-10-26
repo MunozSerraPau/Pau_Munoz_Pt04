@@ -36,12 +36,12 @@ La carpeta `Model` conté els fitxers que tenen la interacció amb la base de da
 ### 3. Vista
 La carpeta `Vista` conté les plantilles de visualització que renderitzen la interfície d'usuari.
 
-- **afegir.vista.php**: Vista per a la pàgina d'afegir campions.
-- **canviarContrasenya.vista.php**: Vista per canviar la contrasenya de l'usuari.
-- **index.vista.php**: Vista principal de l'aplicació.
+- **afegir.vista.php**: Vista per a la pàgina d'afegir campions amb al que s'omplen les dades del champ que crear nou.
+- **canviarContrasenya.vista.php**: Vista per canviar la contrasenya de l'usuari amb un formulari.
+- **index.vista.php**: Vista principal de l'aplicació, amb la qual si estem logeats ens mostra d'una manera amb la que podem editar i eliminar els campions que ha creat l'Usuari i nomes ens mostren els camps que ha creat, sino el mostren tots els altres sense importar de qui sigui, no obtyant no podra ni editar ni eliminar cap. En aqeust arxiu hi ha un petit script per fer la confirmació a l'hora de eliminar un campio, per no eliminar-ho directament.
 - **login.php**: Vista per a la pàgina d'inici de sessió.
 - **signUp.php**: Vista per a la pàgina de registre.
-- **update.vista.php**: Vista per actualitzar la informació de campions o usuaris.
+- **update.vista.php**: Vista per actualitzar la informació de campions amb la qual es mostrar la informació actualq ue hi ha i nosltres podrem editarla per poder modificar aquell champ.
 
 ### 4. Style
 La carpeta `Style` conté els fitxers CSS per a l'aplicació.
@@ -51,37 +51,18 @@ La carpeta `Style` conté els fitxers CSS per a l'aplicació.
 - **signUp.css**: Estils específics per a la pàgina de registre d'usuaris.
 
 ### 5. Base de Dades
-- **pt04_pau_munoz.sql**: Fitxer SQL que conté l'estructura i les dades de la base de dades necessària per a l'aplicació.
+- **pt04_pau_munoz.sql**: Fitxer SQL que conté l'estructura i les dades de la base de dades necessària per a l'aplicació amb dos usuaris i 30 registres.
 
 ### 6. Altres Fitxers
-- **README.md**: Document de referència que descriu el projecte.
-- **index.php**: Fitxer principal que serveix com a punt d'entrada per a l'aplicació.
-
-## Configuració
-
-1. Clona aquest repositori al teu entorn local.
-2. Importa el fitxer `pt04_pau_munoz.sql` al teu sistema de gestió de bases de dades (com MySQL) per configurar la base de dades.
-3. Configura la connexió a la base de dades en els models segons sigui necessari.
-4. Executa l'aplicació en un servidor compatible amb PHP, com XAMPP o WAMP.
+- **index.php**: Fitxer principal que serveix com a punt d'entrada per a l'aplicació i la qual et redirigeix a la index.vista la qual et mostrar una cosa o unalte en funcuió del parametre session.
 
 ## Funcionalitats
 
-- **Registre d'Usuaris**: Els usuaris es poden registrar a la plataforma.
-- **Inici de Sessió**: Els usuaris poden iniciar sessió i accedir a la plataforma.
-- **Gestió de Campions**: Els usuaris poden afegir, editar i eliminar campions.
-- **Canvi de Contrasenya**: Els usuaris poden actualitzar la seva contrasenya.
-- **Tancar Sessió**: Els usuaris poden tancar sessió de manera segura.
+- **Registre d'Usuaris**: Els usuaris es poden registrar a la plataforma i iniciar seccio quan vulguin.
+- **Inici de Sessió**: Els usuaris poden iniciar sessió i accedir a la plataforma, poden editar els seus registres i eliminar-los.
+- **Canvi de Contrasenya**: Els usuaris poden actualitzar la seva contrasenya sempre que sigui segura.
+- **Tancar Sessió**: Els usuaris poden tancar sessió de manera segura i seguir navegant.
 
-## Tecnologies Utilitzades
+## SESSION
 
-- **PHP**: Llenguatge de programació per a la lògica del servidor.
-- **MySQL**: Sistema de gestió de bases de dades.
-- **HTML i CSS**: Per a l'estructura i el disseny de la interfície d'usuari.
-
-## Autor
-
-- **Nom**: Pau Muñoz
-
-## Llicència
-
-Aquest projecte està llicenciat sota [la teva llicència preferida, per exemple, MIT License].
+En el meu cas he fet servir les seccion per poder mostrar els campions d'Un usuari concret i si no que es mostresin tots, a més de poder obtenir el Nickname en cualsevol moment i poder-lo utilitzar.
