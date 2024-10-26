@@ -29,9 +29,9 @@ La carpeta `Controlador` conté els fitxers que gestionen la lògica de l'aplica
 ### 2. Model
 La carpeta `Model` conté els fitxers que tenen la interacció amb la base de dades.
 
-- **modelChampions.php**: Model per gestionar les dades relacionades amb els campions.
-- **modelEditarChampions.php**: Model per actualitzar les dades dels campions.
-- **modelUsuaris.php**: Model per gestionar les dades dels usuaris, com el registre i l'autenticació.
+- **modelChampions.php**: Model per gestionar tot el que es el tema de la paginació de quins champs he de guardar quin es el total que hi han.
+- **modelEditarChampions.php**: Model per poder afegir un campio, eliminar-lo, actualitzar-lo i fer diverses comprovacións per mirar si l'Usuari amb el que estem la creat ell o no...
+- **modelUsuaris.php**: Model per gestionar les dades dels usuaris, com el registre, l'autenticació i el poder canviar la contrasenya (encriptada).
 
 ### 3. Vista
 La carpeta `Vista` conté les plantilles de visualització que renderitzen la interfície d'usuari.

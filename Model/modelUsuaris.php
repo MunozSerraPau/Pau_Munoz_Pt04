@@ -1,6 +1,7 @@
 <?php 
 // Pau Muñoz Serra
 
+// Comprova si l'Usuari existeix i si es el cas ens retorna la seva contrasenya encriptada
 function modelNickNameExisteixLogin(PDO $connexio, string $username) {
     try {
         $sql = "SELECT contrasenya FROM usuaris WHERE nickname = :username";
@@ -26,6 +27,8 @@ function modelNickNameExisteixLogin(PDO $connexio, string $username) {
     }
 }
 
+
+// 
 function modelContrasenyaIgualLogin(PDO $connexio, string $username, string $password) {
     try {
         $sql = "SELECT * FROM usuaris WHERE nickname = :username AND contrasenya = :contra";
@@ -50,6 +53,8 @@ function modelContrasenyaIgualLogin(PDO $connexio, string $username, string $pas
     }
 }
 
+
+// Afegim un nou Usari amb totes les dades que li passem
 function modelAfegeixUsuari(PDO $connexio, string $nom, string $cognoms, string $correu, string $nickname, string $contrasenya) {
     try {
         $sql = "INSERT INTO usuaris (nom, cognoms, correu, nickname, contrasenya) VALUES (:nom, :cognoms, :correu, :nickname, :contrasenya)";
@@ -72,6 +77,8 @@ function modelAfegeixUsuari(PDO $connexio, string $nom, string $cognoms, string 
 
 }
 
+
+// Funció per actualitzar una nova contrasenya segosn el nickname que li passem (la contrasenya esta iencriptada quan la guardem)
 function modelCanviContrasenya(PDO $connexio, string $nickName, string $contraNovaV1) {
     try {
         $sql = "UPDATE usuaris  SET contrasenya = :contrasenya WHERE nickname = :nom";

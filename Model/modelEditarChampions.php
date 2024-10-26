@@ -1,4 +1,7 @@
 <?php 
+// Pau Muñoz Serra
+
+// Afegeix un nou campio a la base de dades
 function modelAfegirCampio(PDO $connexio, string $nom, string $descripcio, string $recurs, string $rol, string $nickname) {
     try {
         $sql = "INSERT INTO campeones (name, description, resource, role, creator) VALUES (:namee, :descriptionn, :resourcee, :rolee, :creatorr)";
@@ -21,6 +24,8 @@ function modelAfegirCampio(PDO $connexio, string $nom, string $descripcio, strin
 
 }
 
+
+// Fem la comprovació de si el nom del campio ja existeix o no
 function modelComprovarNom (PDO $connexio, string $nom) {
     try {
         $sql = "SELECT * FROM campeones WHERE name = :nomChamp";
@@ -40,6 +45,8 @@ function modelComprovarNom (PDO $connexio, string $nom) {
     }
 }
 
+
+// Elimina un campio de la base de dades segons el seu ID
 function modelEliminarCampion(PDO $connexio, string $id) {
     try {
         $sql = "DELETE FROM campeones WHERE id = :idChamp";
@@ -57,6 +64,8 @@ function modelEliminarCampion(PDO $connexio, string $id) {
     }
 }
 
+
+// Actualitxza un campió segons al seva ID amb parametres nous
 function modelModificarCampion(PDO $connexio, string $nom, string $descripcio, string $recurs, string $rol, string $id) {
     try {
         $sql = "UPDATE campeones SET name = :namee, description = :descriptionn, resource = :resourcee, role = :rolee WHERE id = :id";
@@ -78,6 +87,8 @@ function modelModificarCampion(PDO $connexio, string $nom, string $descripcio, s
     }
 }
 
+
+// Comprovació de si el campio amb un nom contret l'ha afegir l'usuari que li passem
 function modelComprovarUsuariId (PDO $connexio, string $nom, string $id) {
     try {
         $sql = "SELECT * FROM campeones WHERE id = :idChamp AND creator = :nomCreator";
@@ -100,6 +111,8 @@ function modelComprovarUsuariId (PDO $connexio, string $nom, string $id) {
     }
 }
 
+
+// Obtenim totes les dades d'un campio segosn la seva id per poder-ho mostrar a l'hora de editar-lo per modificar-lo mes endavant
 function modelObtenirDadesChamp (PDO $connexio, string $id) {
     try {
         $sql = "SELECT * FROM campeones WHERE id = :idChamp";
