@@ -47,7 +47,7 @@ La carpeta `Vista` conté les plantilles de visualització que renderitzen la in
 La carpeta `Style` conté els fitxers CSS per a l'aplicació.
 
 - **index.css**: Estils generals per a la pàgina principal.
-- **login.css**: Estils específics per a la pàgina d'inici de sessió.
+- **login.css**: Estils per la majoria de paguines que tenen formulari (login, editar campio...).
 - **signUp.css**: Estils específics per a la pàgina de registre d'usuaris.
 
 ### 5. Base de Dades
