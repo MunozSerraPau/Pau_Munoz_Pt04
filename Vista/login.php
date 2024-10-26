@@ -51,6 +51,10 @@
                 <label for="password">Contraseña</label>
                 <input type="password" id="password" name="password">
             </div>
+            <label>
+                <input type="checkbox" name="recuerdame"> Recuérdame
+            </label>
+
             <p class="form-footer">Has oblidat la contrasenya? <a href="#">Recuperar</a></p> <br>
 
             <?php if (isset($error)):   // Comprova si la variable "error" existeix ?> 

@@ -49,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $contrasenya = htmlspecialchars($_POST['password']);
 
         $existeixUsuari = comprovarUsuari($connexio, $nickname, $contrasenya);
+        
         $error = $existeixUsuari;
 
 
@@ -84,6 +85,15 @@ function comprovarUsuari(PDO $connexio, string $username, string $password) {
             $error = "UsuariConnectat";
             ini_set('session.gc_maxlifetime', 1 * 60);
             $_SESSION['usuari'] = $username;
+
+            // Generar un token único y seguro para el usuario
+            $token = bin2hex(random_bytes(16));
+
+            // Si el usuario seleccionó "recuérdame", establecer cookies
+            if (isset($_POST['remember_me'])) {
+                setcookie('nickname', $username, time() + (30 * 24 * 60 * 60), "/");
+                setcookie('contra_token', $token, time() + (30 * 24 * 60 * 60), "/");
+            }
 
         } elseif($contra === "NoHiHaUsuari") {
             $error = "No hi ha cap Usuari amb aquest NICKNAME";

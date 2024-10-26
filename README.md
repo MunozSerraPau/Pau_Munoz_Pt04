@@ -10,3 +10,5 @@
 - Si l’usuari comet un error a l’hora d’enregistrar-se, s’hauran de mantenir les dades al formulari actual.
 - Una vegada validat, s’ha de mantenir la sessió de l’usuari almenys 40min activa.
 - Cal treballar amb sessions i cookies. Valoreu en quins casos cal treballar amb sessions i quan amb cookies
+
+## 
